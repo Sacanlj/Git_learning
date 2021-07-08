@@ -520,6 +520,7 @@ ps：
 
 现在，分支操作完了，这个分支没用了，就可以删掉了：
 
+**且注意，不能再要删除的分支下删除该分支。并且，若该分支没有合并，会不让你删除，此时可以用`git branch -D <分支名>`强制删除**
 ![image-20210708220845394](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708220845394.png)
 
 ### 7.2远程分支操作
@@ -539,4 +540,75 @@ ps：
 在本地创建一个分支：
 
 ![image-20210708222710018](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708222710018.png)
+
+作了修改后，推送到远程：
+
+`git push origin <远程分支名字>`
+
+![image-20210708223136511](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708223136511.png)
+
+![image-20210708223416196](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708223416196.png)
+
+![image-20210708224347561](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708224347561.png)
+
+远程已经有了这个分支。
+
+删除远程分支：
+
+`git push origin :<远程分支名>`
+
+![image-20210708225403136](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708225403136.png)
+
+![image-20210708225426537](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708225426537.png)
+
+![image-20210708225438714](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708225438714.png)
+
+已经把远程的删除了。
+
+**接下来，把远程的分支拉取到本地：**
+
+在远程创建了一个分支：
+
+![image-20210708225525251](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708225525251.png)
+
+
+
+![image-20210708225559367](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708225559367.png)
+
+使用命令：`git checkout -b <新建的本地分支名> origin/<远程分支名>`
+
+![image-20210708225957031](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708225957031.png)
+
+原因是：远程还没有刷新出来该分支
+
+![image-20210708230119064](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708230119064.png)
+
+此时需要获取远程仓库的最新状态：
+
+命令：`git fetch`
+
+![image-20210708230316104](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708230316104.png)
+
+有了，此时再拉取：
+
+![image-20210708230433587](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708230433587.png)
+
+可见从远程拉取了dev1到本地并创建了dev这个本地分支。
+
+### 7.3分支冲突及解决
+
+当分支和主干对同一个文件的同一行（同一个位置）进行操作后，在合并时就会出现冲突（因为不知道以主干为准还是以分支为准）此时就需要解决冲突。解决方法很简单，在（mastre|merging）状态下，打开冲突的文件，保留下需要的版本，删除不需要的版本即可。然后再合并。
+
+视频链接：[https://www.bilibili.com/video/BV1T54y1H7Lo?p=14&spm_id_from=pageDriver]
+
+### 7.4多人冲突协同解决
+
+多人冲突出现在，两个人都拉了同一个文件，让后都在同一个行进行了改变。第一个人推送了，没有问题，第二个人提交时就会出现问题，此时需要重新拉取文件，解决冲突后再提交。
+
+视频链接：(https://www.bilibili.com/video/BV1T54y1H7Lo?p=16&spm_id_from=pageDriver)
+
+## 八、idea集成Git
+
+(https://www.bilibili.com/video/BV1T54y1H7Lo?p=17)
+>>>>>>> dev
 
