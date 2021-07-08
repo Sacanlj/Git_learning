@@ -408,7 +408,7 @@ id_rsa是私钥，id_rsa.pub是公钥。
 
 OK。
 
-#### 6.3推送到远程仓库
+### 6.3推送到远程仓库
 
 以原来的仓库为例，即把git_learning仓库推送到远程仓库。
 
@@ -428,7 +428,7 @@ README就是一个介绍该仓库项目的文件。
 
 Choose a license是用来选择许可证的，许可证的作用是：比如，区别该项目是开源的，你可以下载去自己玩一玩，改一改，但不可以发布。或者是开源的然后还可以自己改甚至可以二次改造发布。
 
-**推送：**
+##### 3.推送：
 
 首先要
 
@@ -446,11 +446,169 @@ Choose a license是用来选择许可证的，许可证的作用是：比如，�
 
 ![image-20210708203242186](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708203242186.png)
 
-已经连接到了远程。
+**第一次**连接到了远程。
 
-`git push -u origin master` 推送到远程
+`git push -u origin master` **第一次**推送到远程
+
+之后的每次该本地仓库推送到远程，只需要`git push`即可
+
+![image-20210708213730005](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708213730005.png)
+
+## 七、Git分支操作
+
+### 7.1本地分支操作
+
+![image-20210708214118067](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708214118067.png)
+
+![image-20210708214143613](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708214143613.png)
+
+主干(master)理解为是已经开发完的，目前已经上线的可以使用的版本。当我们需要增加新功能或者修改什么内容时，不会直接在主干上操作，而是会拉一个分支出来，在分支上操作，这样分支上出现的任何问题，都不会影响主干的正常运作，十分安全高效。
+
+ps：
+
+`git merge branch`合并分支时，**必须切换到主干**上才能操作。
+
+**实践：**
+
+`git branch`
+
+![image-20210708214947653](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708214947653.png)
+
+`git checkout -b new_branch`
+
+![image-20210708215132703](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708215132703.png)
+
+**此时，创建一个新分支，该分支里的内容就是创建分支时，主干里有的全部内容：**
+
+![image-20210708215332968](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708215332968.png)
+
+`git checkout <分支名>`
+
+![image-20210708215444600](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708215444600.png)
+
+`git branch -m old new`  (重命名)
+
+![image-20210708215708241](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708215708241.png)
+
+**现在，在新分支下操作：**
+
+![image-20210708215831053](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708215831053.png)
+
+然后直接在工作目录下操作（虽然工作目录是同一个，但是是在新分支下）
+
+![image-20210708220203780](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708220203780.png)
+
+![image-20210708220220831](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708220220831.png)
+
+![image-20210708220236184](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708220236184.png)
+
+分支操作完成后切回主干：
+
+![image-20210708220405402](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708220405402.png)
+
+发现主干下并无文件git03.txt。也就是说在分支上的操作和主干没有任何关系。
+
+**那么，如果我认为在分支上的操作已经完成了，没有任何问题，则可以合并：**
+
+**合并前一定要先切到主干！**
+
+`git merge <分支名>`
+
+![image-20210708220708578](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708220708578.png)
+
+此时分支上的内容以及合并（同步）到主干上了。
+
+现在，分支操作完了，这个分支没用了，就可以删掉了：
+
+**且注意，不能再要删除的分支下删除该分支。并且，若该分支没有合并，会不让你删除，此时可以用`git branch -D <分支名>`强制删除**
+
+![image-20210708220845394](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708220845394.png)
+
+### 7.2远程分支操作
+
+远程分支操作主要就是：推送本地分支到远程、把远程的分支拉取到本地并且在本地创建一个分支、删除远程的分支。
+
+![image-20210708222206601](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708222206601.png)
+
+**实践：**
+
+`gti branch -a`
+
+查看远程分支，红色的就是远程仓库的主干。其他的(白色和绿色的)就是本地分支
+
+![image-20210708222317009](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708222317009.png)
+
+在本地创建一个分支：
+
+![image-20210708222710018](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708222710018.png)
+
+作了修改后，推送到远程：
+
+`git push origin <远程分支名字>`
+
+![image-20210708223136511](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708223136511.png)
+
+![image-20210708223416196](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708223416196.png)
+
+![image-20210708224347561](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708224347561.png)
+
+远程已经有了这个分支。
+
+删除远程分支：
+
+`git push origin :<远程分支名>`
+
+![image-20210708225403136](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708225403136.png)
+
+![image-20210708225426537](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708225426537.png)
+
+![image-20210708225438714](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708225438714.png)
+
+已经把远程的删除了。
+
+**接下来，把远程的分支拉取到本地：**
+
+在远程创建了一个分支：
+
+![image-20210708225525251](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708225525251.png)
 
 
 
+![image-20210708225559367](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708225559367.png)
 
+使用命令：`git checkout -b <新建的本地分支名> origin/<远程分支名>`
+
+![image-20210708225957031](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708225957031.png)
+
+原因是：远程还没有刷新出来该分支
+
+![image-20210708230119064](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708230119064.png)
+
+此时需要获取远程仓库的最新状态：
+
+命令：`git fetch`
+
+![image-20210708230316104](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708230316104.png)
+
+有了，此时再拉取：
+
+![image-20210708230433587](C:\Users\asus\AppData\Roaming\Typora\typora-user-images\image-20210708230433587.png)
+
+可见从远程拉取了dev1到本地并创建了dev这个本地分支。
+
+### 7.3分支冲突及解决
+
+当分支和主干对同一个文件的同一行（同一个位置）进行操作后，在合并时就会出现冲突（因为不知道以主干为准还是以分支为准）此时就需要解决冲突。解决方法很简单，在（mastre|merging）状态下，打开冲突的文件，保留下需要的版本，删除不需要的版本即可。然后再合并。
+
+视频链接：[https://www.bilibili.com/video/BV1T54y1H7Lo?p=14&spm_id_from=pageDriver]
+
+### 7.4多人冲突协同解决
+
+多人冲突出现在，两个人都拉了同一个文件，让后都在同一个行进行了改变。第一个人推送了，没有问题，第二个人提交时就会出现问题，此时需要重新拉取文件，解决冲突后再提交。
+
+视频链接：(https://www.bilibili.com/video/BV1T54y1H7Lo?p=16&spm_id_from=pageDriver)
+
+## 八、idea集成Git
+
+(https://www.bilibili.com/video/BV1T54y1H7Lo?p=17)
 
